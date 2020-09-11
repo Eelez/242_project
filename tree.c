@@ -20,7 +20,7 @@ struct node
 
 struct tree{
     struct node root = NULL;
-};
+} rb_tree;
 
 
 struct node* search(struct node *root, int x)
@@ -57,6 +57,21 @@ struct node* new_node(int x, struct node *parent_node)
     return p;
 }
 
+
+void tree_fix(struct node *x ){
+    if(rb_tree->root == NULL)
+
+        //root is NULL, make x BLACK and make root x;
+        x->colour = BLACK;
+        rb_tree->root == x;
+
+    else if(x->parent->colour == RED)
+        if(x->parent->parent->left->colour == RED && x->parent->parent->right->colour == RED)
+            x->parent->parent->colour
+
+}
+
+
 struct node* insert(struct node *root, int x)
 {
     //update frequency
@@ -74,7 +89,7 @@ struct node* insert(struct node *root, int x)
     else // x is smaller should be inserted to left
         root->left_child = insert(root->left_child,x);
 
-
+    tree_fix(root);
     return root;
 }
 
@@ -91,7 +106,3 @@ void inorder(struct node *root)
 }
 
 
-
-void tree_fix(struct node *root ){
-
-}
