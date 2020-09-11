@@ -4,5 +4,4 @@
 
 #ifndef INC_242_PROJECT_TREE_H
 #define INC_242_PROJECT_TREE_H
-typedef enum tree_e { BST, RBT } tree_t;
 #endif //INC_242_PROJECT_TREE_H

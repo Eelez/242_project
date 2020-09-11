@@ -5,13 +5,16 @@
 #include <stdlib.h>
 #include "tree.h"
 
-enum tree_e { BST, RBT } tree_t;
+typedef enum tree_e { BST, RBT } tree_t;
+typedef enum node_c { RED, BLACK };
+
 struct node
 {
     int data; //node will store an integer
     struct node *right_child; // right child
     struct node *left_child; // left child
-    struct node *frequency;
+    int frequency;
+    enum node_c colour;
 };
 
 struct node* search(struct node *root, int x)
@@ -42,6 +45,7 @@ struct node* new_node(int x)
     p->data = x;
     p->left_child = NULL;
     p->right_child = NULL;
+    p->colour = black;
 
     return p;
 }
@@ -50,7 +54,7 @@ struct node* insert(struct node *root, int x)
 {
     //update frequency
     if (root->data == x){
-        frequency
+        frequency == frequency+1;
     }
 
     //searching for the place to insert
