@@ -20,6 +20,12 @@ struct node
 };
 
 
+struct node* new_tree(enum tree_e type){
+    tree_t = type;
+    return new_node(NULL, NULL);
+}
+
+
 
 struct node* search(struct node *root, int x)
 {
@@ -31,17 +37,7 @@ struct node* search(struct node *root, int x)
         return search(root->left_child,x);
 }
 
-//function to find the minimum value in a node
-//struct node* find_minimum(struct node *root)
-//{
-//    if(root == NULL)
-//        return NULL;
-//    else if(root->left_child != NULL) // node with minimum value will have no left child
-//        return find_minimum(root->left_child); // left most element will be minimum
-//    return root;
-//}
 
-//function to create a node
 struct node* new_node(int x, struct node *parent_node)
 {
     struct node *p;
@@ -103,7 +99,7 @@ struct node* insert(struct node *root, int x)
 {
     //update frequency
     if (root->data == x){
-        frequency == frequency+1;
+        root->frequency = root->frequency+1;
         return root;
     }
 
@@ -115,8 +111,9 @@ struct node* insert(struct node *root, int x)
         root->right_child = insert(root->right_child, x);
     else // x is smaller should be inserted to left
         root->left_child = insert(root->left_child,x);
-
-    tree_fix(root);
+    if(tree_t == RBT) {
+        tree_fix(root);
+    }
     return root;
 }
 
@@ -168,4 +165,24 @@ void right_rotate(struct node *x){
     }
     y->right = x;
     x->parent = y;
+}
+
+int tree_depth(struct node *root){
+    if(root == NULL){
+        return 0;
+    }
+    int count = 1;
+
+    int right = tree_depth(root->left);
+    int left  = tree_depth(root->right);
+
+    if(right>left){
+        count = 1+right;
+    }else if(left>right){
+        count = 1+left;
+    }
+
+    return count;
+
+
 }
