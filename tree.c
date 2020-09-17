@@ -1,59 +1,115 @@
 //
-// Created by Samuel on 10/09/2020.
+// Created by User on 12/09/2020.
 //
-
+#include <stdio.h>
+#include <stdlib.h>
 #include "tree.h"
 
-
 typedef enum tree_e { BST, RBT } tree_t;
+typedef enum node_c { RED, BLACK };
 
-
-
-
-struct node {
-
-    int data;
-    struct node *right;
-    struct node  *left;
-
+struct node
+{
+    int data; //node will store an integer
+    struct node *right_child; // right child
+    struct node *left_child; // left child
+    int frequency; // how often does this value appear
+    enum node_c colour; //  red or black
 };
 
-struct node* search(struct node *root, int x ){
-    if(root==NULL || root->data == x)
+
+struct tree{
+    struct node root = NULL;
+} rb_tree;
+
+
+struct node* search(struct node *root, int x)
+{
+    if(root==NULL || root->data==x) //if root->data is x then the element is found
         return root;
-    else if(x>root->data)
-        return search(root->right, x);
-    else
-        return search(root->left, x)
+    else if(x>root->data) // x is greater, so we will search the right subtree
+        return search(root->right_child, x);
+    else //x is smaller than the data, so we will search the left subtree
+        return search(root->left_child,x);
 }
 
-struct node* create_tree(int x , ){
+//function to find the minimum value in a node
+//struct node* find_minimum(struct node *root)
+//{
+//    if(root == NULL)
+//        return NULL;
+//    else if(root->left_child != NULL) // node with minimum value will have no left child
+//        return find_minimum(root->left_child); // left most element will be minimum
+//    return root;
+//}
+
+//function to create a node
+struct node* new_node(int x, struct node *parent_node)
+{
     struct node *p;
     p = malloc(sizeof(struct node));
     p->data = x;
-    p->left = NULL;
-    p->right = NULL;
+    p->left_child = NULL;
+    p->right_child = NULL;
+    p->parent = parent_node;
+    p->colour = RED;
 
     return p;
 }
 
-struct node* insert(struct node *root, int x){
-    if(root == NULL)
-        return create_tree(x);
-    else if(x > root->data)
-        root->right = insert(root->right, x);
-    else
-        root->left = insert(root->left, x);
 
+void tree_fix(struct node *x ){
+    if(x->parent == NULL)
+        x->colour = BLACK;
+        return;
+
+    else if(x->parent->colour == RED)
+        if(x->parent->parent->left->colour == RED && x->parent->parent->right->colour == RED)
+            x->parent->parent->colour = RED;
+            x->parent->parent->left->colour = BLACK;
+            x->parent->parent->right->colour = BLACK;
+
+        else if(x->parent->parent->left->colour == BLACK || x->parent->parent->right->colour == BLACK || x->parent->parent->right == NULL || x->parent->parent->left == NULL)
+            if( x->parent = x->parent->parent->right)
+
+                if(x == x->parent->right)
+                    // left rotate, then sibling to red, parent to black
+                else if(x == x->parent->left)
+
+}
+
+
+struct node* insert(struct node *root, int x)
+{
+    //update frequency
+    if (root->data == x){
+        frequency == frequency+1;
+        return root;
+    }
+
+
+    //searching for the place to insert
+    if(root==NULL)
+        return new_node(x, root);
+    else if(x>root->data) // x is greater. Should be inserted to right
+        root->right_child = insert(root->right_child, x);
+    else // x is smaller should be inserted to left
+        root->left_child = insert(root->left_child,x);
+
+    tree_fix(root);
     return root;
 }
 
 
+
 void inorder(struct node *root)
 {
-    if(root!=NULL){
-        inorder(root->left_child);
-        printf(" %d ", root->data);
-        inorder(root->right_child);
+    if(root!=NULL) // checking if the root is not null
+    {
+        inorder(root->left_child); // visiting left child
+        printf(" %d ", root->data); // printing data at root
+        inorder(root->right_child);// visiting right child
     }
 }
+
+
