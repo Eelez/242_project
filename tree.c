@@ -13,14 +13,12 @@ struct node
     int data; //node will store an integer
     struct node *right_child; // right child
     struct node *left_child; // left child
-    int frequency;
-    enum node_c colour;
+    struct node *parent;
+    int frequency; // how often does this value appear
+    enum node_c colour; //  red or black
+
 };
 
-
-struct tree{
-    struct node root = NULL;
-} rb_tree;
 
 
 struct node* search(struct node *root, int x)
@@ -59,15 +57,44 @@ struct node* new_node(int x, struct node *parent_node)
 
 
 void tree_fix(struct node *x ){
-    if(rb_tree->root == NULL)
-
-        //root is NULL, make x BLACK and make root x;
+    if(x->parent == NULL)
         x->colour = BLACK;
-        rb_tree->root == x;
+        return;
 
-    else if(x->parent->colour == RED)
-        if(x->parent->parent->left->colour == RED && x->parent->parent->right->colour == RED)
-            x->parent->parent->colour
+    while (x.parent.colour == RED){
+        if (x.parent == x.parent.parent.right){
+            u = x.parent.parent.left;
+            if (u.colour == RED){
+                u.colour = BLACK;
+                x.parent.colour = BLACK;
+                x.parent.parent.colour = RED;
+                x = x.parent.parent;
+            }else if(x = x.parent.left) {
+                x = x.parent;
+                //left rotate
+            }
+            x.parent.colour = BLACK;
+            x.parent.parent.colour = RED;
+            //right rotate
+
+        } else if (x.parent == x.parent.parent.left){
+            u = x.parent.parent.right;
+            if (u.colour == RED){
+                u.colour = BLACK;
+                x.parent.colour = BLACK;
+                x.parent.parent.colour = BLACK;
+                x = x.parent.parent;
+            }else if(x = x.parent.right){
+                x = x.parent;
+                //right rotate
+            }
+            x.parent.colour = BLACK;
+            x.parent.parent.colour = RED;
+            //left rotate
+        }
+
+    }
+
 
 }
 
@@ -106,3 +133,39 @@ void inorder(struct node *root)
 }
 
 
+void left_rotate(struct node *x ){
+    struct node *y = x->right;
+    x->right = y->left;
+    if (y->left != NULL) {
+        y->left->parent = x;
+    }
+    y->parent = x->parent;
+    if (x->parent == NULL) {
+        this->root = y;
+    } else if (x == x->parent->left) {
+        x->parent->left = y;
+    } else {
+        x->parent->right = y;
+    }
+    y->left = x;
+    x->parent = y;
+
+
+}
+void right_rotate(struct node *x){
+    struct node *y = x->left;
+    x->left = y->right;
+    if (y->right != NULL) {
+        y->right->parent = x;
+    }
+    y->parent = x->parent;
+    if (x->parent == NULL) {
+        this->root = y;
+    } else if (x == x->parent->right) {
+        x->parent->right = y;
+    } else {
+        x->parent->left = y;
+    }
+    y->right = x;
+    x->parent = y;
+}

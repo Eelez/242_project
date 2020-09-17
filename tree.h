@@ -1,7 +1,8 @@
 //
-// Created by User on 12/09/2020.
+// Created by Samuel on 10/09/2020.
 //
 
-#ifndef INC_242_PROJECT_TREE_H
-#define INC_242_PROJECT_TREE_H
-#endif //INC_242_PROJECT_TREE_H
+#ifndef INC_242_PROJECT_BST_H
+#define INC_242_PROJECT_BST_H
+
+#endif //INC_242_PROJECT_BST_H
